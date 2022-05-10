@@ -1,0 +1,34 @@
+@use '/src/styles/constants/colors';
+@use '/src/styles/constants/levels';
+@use '/src/styles/mixins/flexbox';
+@use '/src/styles/mixins/position';
+
+.movieBodyWrap {
+  height: auto;
+  min-height: 100%;
+
+  .movieItemWrap {
+    padding: 10px;
+    margin: 40px;
+    background-color: colors.$GRAY3;
+    border-radius: 40px;
+
+    dl {
+      display: flex;
+    }
+
+    dd {
+      display: inline-block;
+      color: colors.$WHITE;
+    }
+
+    dt {
+      display: none;
+    }
+
+    .posterImg {
+      width: 100px;
+      margin: 20px;
+    }
+  }
+}

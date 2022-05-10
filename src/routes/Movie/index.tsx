@@ -1,25 +1,15 @@
-import { useMount, useState } from 'hooks'
-import { getMovieApi } from 'services/movie'
-import { IMovieAPIRes } from 'types/movie.d'
-import { SearchIcon } from 'assets/svgs'
+import { Link, NavLink, useParams } from 'react-router-dom'
 import styles from './Movie.module.scss'
+import MovieList from './MoviePage/MovieList'
+import MovieFavorite from './MoviePage/MovieFavorite'
+import { SearchIcon } from 'assets/svgs'
 
 const Movie = () => {
-  const [data, setData] = useState<IMovieAPIRes>()
-
-  useMount(() => {
-    getMovieApi({
-      s: 'iron man',
-      page: 1,
-    }).then((res) => {
-      setData(res.data)
-    })
-  })
-
-  if (!data) return null
+  const { pageSection } = useParams<{ pageSection: string }>()
 
   return (
     <section className={styles.movieWrap}>
+      
       <header className={styles.movieHeader}>
         <div className={styles.searchBox}>
           <input type='text' className={styles.searchInput} placeholder='영화 검색'/>
@@ -27,24 +17,26 @@ const Movie = () => {
           <button type='button' aria-label='Search button' />    
         </div>
       </header>
-      <section className={styles.movieBodyWrap}>
-        <ul>
-          {data.Search.map((item)=>(
-            <li key={item.imdbID} className={styles.movieItemWrap}>
-              <dt>Poster</dt>
-              <dd><img src={`${item.Poster}`} alt={`${item.Title}`} className={styles.posterImg}/></dd>
-              <dt>Title</dt>
-              <dd>{item.Title}</dd>
-              <dt>Year</dt>
-              <dd>({item.Year})</dd>
-              <dt>Type</dt>
-              <dd>{item.Type}</dd>
 
-            </li>
-          ))}
-        </ul>
-      </section>
-      <footer className={styles.movieFooter}>3</footer>
+      {!pageSection && <MovieList />}
+      {pageSection === 'favorite' && <MovieFavorite/>}
+
+
+      <footer className={styles.movieFooterWrap} >
+        <main className={styles.movieFooter}>
+          <nav className={styles.lnb}>
+            <ul>
+              <li>
+                <Link to=''>검색</Link>
+              </li>
+              <li>
+                <NavLink to='favorite'>즐겨찾기</NavLink>
+              </li>
+            </ul>
+          </nav>
+        </main>
+      </footer>
+
     </section>
   )
 }

@@ -43,41 +43,40 @@
     }
   }
 
-  .movieBodyWrap {
-    height: auto;
-    min-height: 100%;
-
-    .movieItemWrap {
-      padding: 10px;
-      margin: 40px;
-      background-color: colors.$GRAY3;
-      border-radius: 40px;
-
-      dl {
-        display: flex;
-      }
-
-      dd {
-        display: inline-block;
-        color: colors.$WHITE;
-      }
-
-      dt {
-        display: none;
-      }
-
-      .posterImg {
-        width: 100px;
-        margin: 20px;
-      }
-    }
-  }
-
-  .movieFooter {
+  .movieFooterWrap {
     position: fixed;
     bottom: 0;
     width: 420px;
     height: 60px;
+    color: colors.$WHITE;
     background-color: colors.$GRAY2;
+
+    .movieFooter {
+      .lnb {
+        display: flex;
+        justify-content: center;
+        padding: 24px 0;
+
+        ul {
+          display: flex;
+        }
+
+        li {
+          + li {
+            margin-left: 80px;
+          }
+        }
+
+        a {
+          padding: 4px 14px;
+          color: colors.$WHITE;
+
+          &.isActive {
+            font-weight: bold;
+            color: colors.$PINK;
+          }
+        }
+      }
+    }
   }
 }
