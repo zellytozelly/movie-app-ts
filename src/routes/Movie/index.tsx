@@ -1,16 +1,14 @@
-import styles from './Movie.module.scss'
-
 import { useMount, useState } from 'hooks'
 import { getMovieApi } from 'services/movie'
 import { IMovieAPIRes } from 'types/movie.d'
 import { SearchIcon } from 'assets/svgs'
+import styles from './Movie.module.scss'
 
 const Movie = () => {
   const [data, setData] = useState<IMovieAPIRes>()
 
   useMount(() => {
     getMovieApi({
-      apikey: '',
       s: 'iron man',
       page: 1,
     }).then((res) => {
