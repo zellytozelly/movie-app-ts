@@ -3,6 +3,7 @@ import styles from './Movie.module.scss'
 import { useMount, useState } from 'hooks'
 import { getMovieApi } from 'services/movie'
 import { IMovieAPIRes } from 'types/movie.d'
+import { SearchIcon } from 'assets/svgs'
 
 const Movie = () => {
   const [data, setData] = useState<IMovieAPIRes>()
@@ -20,31 +21,32 @@ const Movie = () => {
   if (!data) return null
 
   return (
-    <section>
-      <header>
-        <div>
-          <input type='text'/>
-          <button type='button' aria-label='Search button' />
+    <section className={styles.movieWrap}>
+      <header className={styles.movieHeader}>
+        <div className={styles.searchBox}>
+          <input type='text' className={styles.searchInput} placeholder='영화 검색'/>
+          <div className={styles.searchIcon}><SearchIcon /></div>
+          <button type='button' aria-label='Search button' />    
         </div>
       </header>
-      <div>
+      <section className={styles.movieBodyWrap}>
         <ul>
           {data.Search.map((item)=>(
-            <li key={item.imdbID}>
+            <li key={item.imdbID} className={styles.movieItemWrap}>
               <dt>Poster</dt>
-              <dd><img src={`${item.Poster}`} alt={`${item.Title}`}/></dd>
+              <dd><img src={`${item.Poster}`} alt={`${item.Title}`} className={styles.posterImg}/></dd>
               <dt>Title</dt>
               <dd>{item.Title}</dd>
               <dt>Year</dt>
-              <dd>{item.Year}</dd>
+              <dd>({item.Year})</dd>
               <dt>Type</dt>
               <dd>{item.Type}</dd>
 
             </li>
           ))}
         </ul>
-      </div>
-      <footer>3</footer>
+      </section>
+      <footer className={styles.movieFooter}>3</footer>
     </section>
   )
 }
