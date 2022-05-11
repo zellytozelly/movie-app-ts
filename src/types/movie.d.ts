@@ -1,4 +1,4 @@
-interface Search {
+export interface ISearch {
   Title: string
   Year: string
   imdbID: string
@@ -7,7 +7,7 @@ interface Search {
 }
 
 export interface IMovieAPIRes {
-  Search: Search[]
+  Search: ISearch[]
   totalResults: string
   Response: string
 }

@@ -1,26 +1,16 @@
-import { useMount, useState } from 'hooks'
-import { getMovieApi } from 'services/movie'
-import { IMovieAPIRes } from 'types/movie.d'
+import { ISearch } from 'types/movie.d'
 import styles from './moviePage.module.scss'
 
-const MovieList = () => {
-  const [data, setData] = useState<IMovieAPIRes>()
+interface Props {
+  data: ISearch[]
+}
 
-  useMount(() => {
-    getMovieApi({
-      s: 'iron man',
-      page: 1,
-    }).then((res) => {
-      setData(res.data)
-    })
-  })
-
+const MovieList = ({data}:Props) => {
   if (!data) return null
-
   return (
     <section className={styles.movieBodyWrap}>
       <ul>
-        {data.Search.map((item)=>(
+        {data.map((item)=>(
           <li key={item.imdbID} className={styles.movieItemWrap}>
             <dt>Poster</dt>
             <dd><img src={`${item.Poster}`} alt={`${item.Title}`} className={styles.posterImg}/></dd>

@@ -3,6 +3,12 @@
 @use '/src/styles/mixins/flexbox';
 @use '/src/styles/mixins/position';
 
+.noSearchAnswer {
+  padding: 40px;
+  color: colors.$WHITE;
+  background-color: aqua;
+}
+
 .movieBodyWrap {
   height: auto;
   min-height: 100%;

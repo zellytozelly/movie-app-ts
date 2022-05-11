@@ -1,28 +1,40 @@
 import { FormEvent, ChangeEvent, useState } from 'react'
 import { Link, NavLink, useParams } from 'react-router-dom'
+import { useRecoil } from 'hooks/state'
 
-import styles from './movie.module.scss'
+import { getMovieApi } from 'services/movie'
+import { searchDataState } from 'states/movieAtom'
 import MovieList from './MoviePage/MovieList'
 import MovieFavorite from './MoviePage/MovieFavorite'
+
 import { SearchIcon } from 'assets/svgs'
-
-
+import styles from './movie.module.scss'
 
 const Movie = () => {
   const { pageSection } = useParams<{ pageSection: string }>()
-  const [ searchValue, setSearchValue ] = useState('')
-  const [ pageNum, setPageNum ] = useState(0)
+  const [ searchValue, setSearchValue ] = useState<string>('')
+  const [ pageNum, setPageNum ] = useState<number>(0)
+  // const [ data, setData ] = useState<IMovieAPIRes>()
+  const [ searchData, setSearchData ] = useRecoil(searchDataState)
 
   const handleSearchFormSubmit = (event: FormEvent<HTMLFormElement>): void=> {
     event.preventDefault()
     setPageNum(1)
+  
+    getMovieApi({
+        s: searchValue,
+        page: 1,
+      }).then((res) => {
+        setSearchData(res.data.Search)
+        
+      })
+    
   }
 
   const handleSearchInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
     setSearchValue(event.currentTarget.value)
     // setPage(Number(value) + 1)
   }
-
 
   return (
     <section className={styles.movieWrap}>
@@ -42,9 +54,10 @@ const Movie = () => {
         </div>
       </header>
 
-      {!pageSection && <MovieList/>}
-      {pageSection === 'favorite' && <MovieFavorite/>}
-
+      <main>
+        {!pageSection && <MovieList data={searchData}/>}
+        {pageSection === 'favorite' && <MovieFavorite/>}
+      </main>
 
       <footer className={styles.movieFooterWrap} >
         <main className={styles.movieFooter}>
