@@ -1,14 +1,22 @@
+import { useRecoil } from 'hooks/state'
+import { MutableRefObject } from 'react'
+import { searchDataState } from 'states/movieAtom'
+
 import { ISearch } from 'types/movie.d'
 import styles from './moviePage.module.scss'
-
+ 
 interface Props {
   data: ISearch[]
+  pageEndRef?: MutableRefObject<null>
 }
 
-const MovieList = ({data}:Props) => {
+const MovieList = ({data, pageEndRef }:Props) => {
+  const [ searchData ] = useRecoil(searchDataState)
   if (!data) return null
   return (
     <section className={styles.movieBodyWrap}>
+
+
       <ul>
         {data.map((item)=>(
           <li key={item.imdbID} className={styles.movieItemWrap}>
@@ -23,7 +31,11 @@ const MovieList = ({data}:Props) => {
 
           </li>
           ))}
+
+        <div ref={pageEndRef} />
       </ul>
+
+
     </section>
 
   )

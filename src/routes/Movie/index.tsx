@@ -1,9 +1,9 @@
-import { FormEvent, ChangeEvent, useState } from 'react'
+import { FormEvent, ChangeEvent, useState, useEffect, useRef } from 'react'
 import { Link, NavLink, useParams } from 'react-router-dom'
-import { useRecoil } from 'hooks/state'
 
-import { getMovieApi } from 'services/movie'
+import { useRecoil } from 'hooks/state'
 import { searchDataState } from 'states/movieAtom'
+import { getMovieApi } from 'services/movie'
 import MovieList from './MoviePage/MovieList'
 import MovieFavorite from './MoviePage/MovieFavorite'
 
@@ -13,29 +13,45 @@ import styles from './movie.module.scss'
 const Movie = () => {
   const { pageSection } = useParams<{ pageSection: string }>()
   const [ searchValue, setSearchValue ] = useState<string>('')
-  const [ pageNum, setPageNum ] = useState<number>(0)
-  // const [ data, setData ] = useState<IMovieAPIRes>()
   const [ searchData, setSearchData ] = useRecoil(searchDataState)
+
+  const [ movieCount, setMovieCount] = useState<number>(0)
+  const [ pageNum, setPageNum ] = useState<number>(-1)
+  const pageEndRef = useRef(null)
 
   const handleSearchFormSubmit = (event: FormEvent<HTMLFormElement>): void=> {
     event.preventDefault()
-    setPageNum(1)
-  
     getMovieApi({
         s: searchValue,
-        page: 1,
+        page: pageNum,
       }).then((res) => {
         setSearchData(res.data.Search)
-        
+      }).catch((error) => {
+        console.log(error.message)
       })
-    
+
   }
+
+  console.log(pageNum)
+
+  // 옵저버 생성
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries: IntersectionObserverEntry[]) => {
+      if (entries[0].isIntersecting) {
+        setPageNum((prev) => prev + 1)
+      }
+    }, { threshold: 0.8 })
+      if (pageEndRef.current) observer.observe(pageEndRef.current as Element)
+  }, [])
+
+
+
+  // console.log(searchData.length)
 
   const handleSearchInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
     setSearchValue(event.currentTarget.value)
-    // setPage(Number(value) + 1)
   }
-
+  
   return (
     <section className={styles.movieWrap}>
       
@@ -49,13 +65,13 @@ const Movie = () => {
               onChange={handleSearchInputChange}
             />
             <div className={styles.searchIcon}><SearchIcon /></div>
-            <button type='submit' aria-label='Search button' className={styles.searchButton}>GO</button>    
+            <button type='submit' aria-label='Search button' className={styles.searchButton}>검색</button>    
           </form>
         </div>
       </header>
 
       <main>
-        {!pageSection && <MovieList data={searchData}/>}
+        {!pageSection && <MovieList data={searchData} pageEndRef={pageEndRef}/>}
         {pageSection === 'favorite' && <MovieFavorite/>}
       </main>
 
