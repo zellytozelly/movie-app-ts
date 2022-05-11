@@ -7,7 +7,7 @@
   position: relative;
   width: 420px;
   height: 100%;
-  // padding: 0 40px;
+  overflow: scroll;
   background-color: colors.$BLACK;
 
   .movieHeader {
@@ -52,6 +52,11 @@
       width: 20px;
       fill: colors.$GRAYA;
     }
+  }
+
+  .noSearch {
+    padding: 100px;
+    color: colors.$WHITE;
   }
 
   .movieFooterWrap {
