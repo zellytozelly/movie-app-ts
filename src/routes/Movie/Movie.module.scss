@@ -32,6 +32,17 @@
           color: colors.$GRAYA;
         }
       }
+
+      .searchButton {
+        position: absolute;
+        top: 16px;
+        left: 338px;
+        width: 56px;
+        height: 28px;
+        color: colors.$GRAYA;
+        background-color: colors.$GRAY2;
+        border-radius: 20px;
+      }
     }
 
     svg {
