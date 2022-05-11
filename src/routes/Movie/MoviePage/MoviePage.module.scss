@@ -3,12 +3,6 @@
 @use '/src/styles/mixins/flexbox';
 @use '/src/styles/mixins/position';
 
-.noSearchAnswer {
-  padding: 40px;
-  color: colors.$WHITE;
-  background-color: aqua;
-}
-
 .movieBodyWrap {
   height: auto;
   min-height: 100%;
@@ -38,5 +32,9 @@
       margin: 20px;
       border-radius: 10px;
     }
+  }
+
+  .bottomRef {
+    height: 100px;
   }
 }

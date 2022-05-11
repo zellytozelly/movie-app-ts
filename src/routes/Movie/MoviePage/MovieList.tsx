@@ -8,14 +8,15 @@ import styles from './moviePage.module.scss'
 interface Props {
   data: ISearch[]
   pageEndRef?: MutableRefObject<null>
+  searchValue: string
 }
 
-const MovieList = ({data, pageEndRef }:Props) => {
-  const [ searchData ] = useRecoil(searchDataState)
+const MovieList = ({data, pageEndRef, searchValue }:Props) => {
   if (!data) return null
+
   return (
     <section className={styles.movieBodyWrap}>
-
+      
 
       <ul>
         {data.map((item)=>(
@@ -32,7 +33,7 @@ const MovieList = ({data, pageEndRef }:Props) => {
           </li>
           ))}
 
-        <div ref={pageEndRef} />
+        <div className={styles.bottomRef} ref={pageEndRef} />
       </ul>
 
 

@@ -13,28 +13,50 @@ import styles from './movie.module.scss'
 const Movie = () => {
   const { pageSection } = useParams<{ pageSection: string }>()
   const [ searchValue, setSearchValue ] = useState<string>('')
-  const [ searchData, setSearchData ] = useRecoil(searchDataState)
-
-  const [ movieCount, setMovieCount] = useState<number>(0)
-  const [ pageNum, setPageNum ] = useState<number>(-1)
+  const [ searchData, setSearchData, resetSearchData ] = useRecoil(searchDataState)
+  const [ pageNum, setPageNum ] = useState<number>(0)
   const pageEndRef = useRef(null)
 
   const handleSearchFormSubmit = (event: FormEvent<HTMLFormElement>): void=> {
-    event.preventDefault()
-    getMovieApi({
-        s: searchValue,
-        page: pageNum,
-      }).then((res) => {
-        setSearchData(res.data.Search)
-      }).catch((error) => {
-        console.log(error.message)
-      })
 
+    setSearchData([])
+    resetSearchData()
+    setPageNum(1)
+    event.preventDefault()
+    getAPI()
+
+    // Promise.resolve() .then({
+    //   setSearchData([])
+    //   resetSearchData()
+    //   setPageNum(1)
+    //   event.preventDefault()
+    //   getAPI()}
+    // })
+   
   }
 
-  console.log(pageNum)
+  useEffect(()=>{
+    getAPI()
+  },[pageNum])
 
-  // 옵저버 생성
+  const getAPI = () =>{
+
+    if(searchValue === '') return
+     
+    getMovieApi({
+      s: searchValue,
+      page: pageNum,
+    }).then((res) => {
+      
+      const apiData = res.data
+      // setSearchData(prev=>[...prev].concat(apiData.Search))
+      setSearchData(prev=>[...prev, ...apiData.Search])
+      
+    }).catch((error) => {
+      console.log(error.message)
+    })
+  } 
+
   useEffect(() => {
     const observer = new IntersectionObserver((entries: IntersectionObserverEntry[]) => {
       if (entries[0].isIntersecting) {
@@ -44,14 +66,10 @@ const Movie = () => {
       if (pageEndRef.current) observer.observe(pageEndRef.current as Element)
   }, [])
 
-
-
-  // console.log(searchData.length)
-
   const handleSearchInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
     setSearchValue(event.currentTarget.value)
   }
-  
+
   return (
     <section className={styles.movieWrap}>
       
@@ -71,7 +89,8 @@ const Movie = () => {
       </header>
 
       <main>
-        {!pageSection && <MovieList data={searchData} pageEndRef={pageEndRef}/>}
+        {!searchData.length && <div className={styles.noSearchAnswer}>검색 결과가 없습니다.</div>}
+        {!pageSection && <MovieList data={searchData} pageEndRef={pageEndRef} searchValue={searchValue}/>}
         {pageSection === 'favorite' && <MovieFavorite/>}
       </main>
 
