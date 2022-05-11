@@ -1,7 +1,7 @@
-import { FormEvent, KeyboardEvent, ChangeEvent, useState } from 'react'
+import { FormEvent, ChangeEvent, useState } from 'react'
 import { Link, NavLink, useParams } from 'react-router-dom'
 
-import styles from './Movie.module.scss'
+import styles from './movie.module.scss'
 import MovieList from './MoviePage/MovieList'
 import MovieFavorite from './MoviePage/MovieFavorite'
 import { SearchIcon } from 'assets/svgs'

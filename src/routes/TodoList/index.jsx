@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import styles from './TodoList.module.scss'
+import styles from './todoList.module.scss'
 import { CheckIcon } from '../../assets/svgs'
 
 const INIT_TODO = [
@@ -20,7 +20,7 @@ const INIT_TODO = [
   },
 ]
 
-function TodoList() {
+const TodoList = () => {
   const [todoList, setTodoList] = useState(INIT_TODO)
 
   const handleAddClick = () => {

@@ -1,7 +1,7 @@
 import { useMount, useState } from 'hooks'
 import { getMovieApi } from 'services/movie'
 import { IMovieAPIRes } from 'types/movie.d'
-import styles from './MoviePage.module.scss'
+import styles from './moviePage.module.scss'
 
 const MovieList = () => {
   const [data, setData] = useState<IMovieAPIRes>()
