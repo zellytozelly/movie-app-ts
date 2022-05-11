@@ -42,7 +42,7 @@ const Movie = () => {
         </div>
       </header>
 
-      {!pageSection && <MovieList />}
+      {!pageSection && <MovieList/>}
       {pageSection === 'favorite' && <MovieFavorite/>}
 
 
