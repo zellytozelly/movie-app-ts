@@ -1,8 +1,9 @@
-import { FormEvent, ChangeEvent, useState, useEffect, useRef } from 'react'
+import { FormEvent, ChangeEvent, useState, useEffect, useRef, useCallback } from 'react'
 import { Link, NavLink, useParams } from 'react-router-dom'
+import cx from 'classnames'
 
 import { useRecoil } from 'hooks/state'
-import { searchDataState } from 'states/movieAtom'
+import { modalClickState, searchDataState } from 'states/movieAtom'
 import { getMovieApi } from 'services/movie'
 import MovieList from './MoviePage/MovieList'
 import MovieFavorite from './MoviePage/MovieFavorite'
@@ -16,22 +17,17 @@ const Movie = () => {
   const [ searchData, setSearchData, resetSearchData ] = useRecoil(searchDataState)
   const [ pageNum, setPageNum ] = useState<number>(0)
   const pageEndRef = useRef(null)
+  const [ isOpenModal, setOpenModal ] = useRecoil(modalClickState)
+ 
 
   const handleSearchFormSubmit = (event: FormEvent<HTMLFormElement>): void=> {
 
     setSearchData([])
     resetSearchData()
-    setPageNum(1)
     event.preventDefault()
+    
+    setPageNum(1)
     getAPI()
-
-    // Promise.resolve() .then({
-    //   setSearchData([])
-    //   resetSearchData()
-    //   setPageNum(1)
-    //   event.preventDefault()
-    //   getAPI()}
-    // })
    
   }
 
@@ -46,14 +42,18 @@ const Movie = () => {
     getMovieApi({
       s: searchValue,
       page: pageNum,
-    }).then((res) => {
-      
+
+    }).then((res) => {    
       const apiData = res.data
-      // setSearchData(prev=>[...prev].concat(apiData.Search))
-      setSearchData(prev=>[...prev, ...apiData.Search])
+      // setSearchData(prev=>[...prev].concat(apiData.Search)) 
+      // setTimeout(() => {
+        console.log('s=',pageNum)
+        setSearchData(prev=>[...prev, ...apiData.Search])    
+      // }, 120)
       
     }).catch((error) => {
       console.log(error.message)
+      
     })
   } 
 
@@ -70,10 +70,17 @@ const Movie = () => {
     setSearchValue(event.currentTarget.value)
   }
 
+
+  const onClickToggleModal = useCallback(() => {
+    setOpenModal(!isOpenModal)
+  }, [isOpenModal])
+
+
   return (
     <section className={styles.movieWrap}>
       
       <header className={styles.movieHeader}>
+
         <div className={styles.searchBox}>
           <form onSubmit={handleSearchFormSubmit}>
             <input 
@@ -86,11 +93,12 @@ const Movie = () => {
             <button type='submit' aria-label='Search button' className={styles.searchButton}>검색</button>    
           </form>
         </div>
+      
       </header>
 
       <main>
-        {!searchData.length && <div className={styles.noSearchAnswer}>검색 결과가 없습니다.</div>}
-        {!pageSection && <MovieList data={searchData} pageEndRef={pageEndRef} searchValue={searchValue}/>}
+        {(!searchData.length) && <div className={styles.noSearchAnswer}>검색 결과가 없습니다.</div>}
+        {!pageSection && <MovieList data={searchData} pageEndRef={pageEndRef} onClickToggleModal={onClickToggleModal} isOpenModal={isOpenModal}/>}
         {pageSection === 'favorite' && <MovieFavorite/>}
       </main>
 
@@ -99,10 +107,10 @@ const Movie = () => {
           <nav className={styles.lnb}>
             <ul>
               <li>
-                <Link to=''>검색</Link>
+                <Link to='' className={cx({ [styles.isActive]: !pageSection })}>검색</Link>
               </li>
               <li>
-                <NavLink to='favorite'>즐겨찾기</NavLink>
+                <NavLink to='favorite' className={({ isActive }) => cx({ [styles.isActive]: isActive })}>즐겨찾기</NavLink>
               </li>
             </ul>
           </nav>

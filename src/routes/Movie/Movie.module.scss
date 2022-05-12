@@ -12,6 +12,7 @@
 
   .movieHeader {
     position: fixed;
+    z-index: 1;
     width: 420px;
     height: 60px;
     background-color: colors.$GRAY2;
@@ -42,6 +43,12 @@
         color: colors.$GRAYA;
         background-color: colors.$GRAY2;
         border-radius: 20px;
+        box-shadow: 0 1px 1px rgb(0, 0, 0, 50%);
+
+        &:active {
+          background-color: colors.$GRAY1;
+          box-shadow: 0 0 1px rgb(0, 0, 0, 50%);
+        }
       }
     }
 
@@ -89,7 +96,7 @@
           color: colors.$WHITE;
 
           &.isActive {
-            font-weight: bold;
+            font-weight: bolder;
             color: colors.$PINK;
           }
         }

@@ -8,29 +8,49 @@
   min-height: 100%;
   margin-top: 100px;
 
+  .dialogButton {
+    width: 100%;
+    height: 100%;
+    font-size: 100%;
+    text-align: left;
+  }
+
   .movieItemWrap {
+    display: flex;
+    width: 340px;
     padding: 10px;
     margin: 40px;
     background-color: colors.$GRAY3;
-    border-radius: 40px;
-
-    dl {
-      display: flex;
-    }
-
-    dd {
-      display: inline-block;
-      color: colors.$WHITE;
-    }
+    border-radius: 25px;
 
     dt {
       display: none;
     }
 
+    dd {
+      margin: 5px 0 0 10px;
+      color: colors.$WHITE;
+    }
+
+    .movieTextWrap {
+      margin-top: 20px;
+    }
+
     .posterImg {
       width: 100px;
-      margin: 20px;
+      margin: 10px;
       border-radius: 10px;
+    }
+  }
+
+  .movieFavoriteWrap {
+    position: absolute;
+    left: 310px;
+    z-index: 0;
+    margin-top: 142px;
+
+    svg {
+      width: 12px;
     }
   }
 

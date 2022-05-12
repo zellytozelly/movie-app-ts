@@ -5,4 +5,9 @@ export const searchDataState = atom<ISearch[]>({
   key: '#searchDataState',
   default: [],
 })
+
+export const modalClickState = atom<Boolean>({
+  key: '#modalClickState',
+  default: false,
+})
   
