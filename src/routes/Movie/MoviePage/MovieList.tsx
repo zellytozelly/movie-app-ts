@@ -7,7 +7,7 @@ import { ISearch } from 'types/movie.d'
 import styles from './moviePage.module.scss'
 import { HeartIcon } from 'assets/svgs'
 import noPosterImg from 'assets/images/noPoster.png'
- 
+
 interface Props {
   data: ISearch[]
   pageEndRef?: MutableRefObject<null>
@@ -15,19 +15,27 @@ interface Props {
   isOpenModal: Boolean
 }
 
-const MovieList = ({data, pageEndRef, onClickToggleModal, isOpenModal }:Props) => {
+const MovieList = ({ data, pageEndRef, onClickToggleModal, isOpenModal }: Props) => {
   if (!data) return null
 
   return (
     <section className={styles.movieBodyWrap}>
-      
       <ul>
-        {data.map((item)=>(
-          <button type='button' key={item.imdbID} className={styles.dialogButton} onClick={onClickToggleModal}>
+        {data.map((item) => (
+          <button
+            type='button'
+            key={item.imdbID}
+            value={item.imdbID}
+            className={styles.dialogButton}
+            onClick={onClickToggleModal}
+          >
             <li key={item.imdbID} className={styles.movieItemWrap}>
-            
               <div className={styles.moviePosterWrap}>
-                <img src={`${(item.Poster === 'N/A') ? noPosterImg : item.Poster}`} alt={`${item.Title}`} className={styles.posterImg}/>
+                <img
+                  src={`${item.Poster === 'N/A' ? noPosterImg : item.Poster}`}
+                  alt={`${item.Title}`}
+                  className={styles.posterImg}
+                />
               </div>
               <div className={styles.movieTextWrap}>
                 <dt>Title</dt>
@@ -40,23 +48,24 @@ const MovieList = ({data, pageEndRef, onClickToggleModal, isOpenModal }:Props) =
               <div className={styles.movieFavoriteWrap}>
                 <HeartIcon /> like
               </div>
-
             </li>
           </button>
-          ))}
+        ))}
 
         <div className={styles.bottomRef} ref={pageEndRef} />
       </ul>
-      
+
       {isOpenModal && (
         <Modal onClickToggleModal={onClickToggleModal}>
-          이곳에 children이 들어갑니다.
+          <div>
+            <button type='button'>즐겨찾기</button>
+            <button type='button' onClick={onClickToggleModal}>
+              취소
+            </button>
+          </div>
         </Modal>
       )}
-
     </section>
-
-
   )
 }
 

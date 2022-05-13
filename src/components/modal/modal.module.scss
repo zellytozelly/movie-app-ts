@@ -5,8 +5,7 @@
 
 .modalContainer {
   position: fixed;
-  top: 450px;
-  left: 160px;
+  top: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -22,10 +21,20 @@
   align-items: center;
   width: 350px;
   height: 150px;
-  background-color: white;
+  padding: 50px 10px 0;
+  margin-left: 35px;
+  background-color: colors.$GRAYA;
   border: none;
   border-radius: 3px;
   box-shadow: 0 0 30px rgba(30, 30, 30, 18.5%);
+
+  button {
+    padding: 10px;
+    margin: 0 30px;
+    color: colors.$BLACK;
+    background-color: colors.$GRAYD;
+    border-radius: 10px;
+  }
 }
 
 .backdrop {
