@@ -1,39 +1,52 @@
 # Movie App
-- 영화를 검색하고 즐겨찾기로 등록할 수 있는 React App
+- Movie API로 영화를 검색하고 즐겨찾기로 등록할 수 있는 React App
+
+## 배포
+https://movie-app-ts-one.vercel.app/favorite
 
 ## 개발환경
 - React 18.1.0
-- Typescript | eslint | SASS | Recoil
+- Typescript | eslint | SASS & CSS Module | Recoil
 
 ## 주요기능
 - 검색
-- 즐겨찾기
+  - 무한 스크롤
+    - Intersection Observer API
 
+- 즐겨찾기 추가/해제
+  - localStorage 저장 (store.js)
+    
+- 검색 | 즐겨찾기 탭 전환
+  - react-router-dom: 6.3.0
 
+## 
 
 ## 구조
 
 ```
 📦src
  ┣ 📂assets
- ┃ ┗ 📂svgs
- ┣ 📂hooks
+ ┣ 📂components
+ ┃ ┣ 📂common
+ ┃ ┗ 📂modal
+ ┃ ┃ ┣ 📜modal.module.scss
+ ┃ ┃ ┗ 📜Modal.tsx
+ ┣ 📂hooks	                      //Custom hook
  ┣ 📂routes
  ┃ ┣ 📂Movie
  ┃ ┃ ┣ 📂MoviePage
  ┃ ┃ ┃ ┣ 📜MovieFavorite.tsx
  ┃ ┃ ┃ ┣ 📜MovieList.tsx
- ┃ ┃ ┃ ┗ 📜moviePage.module.scss
+ ┃ ┃ ┃ ┗ 📜MoviePage.module.scss
  ┃ ┃ ┣ 📜index.tsx
- ┃ ┃ ┗ 📜movie.module.scss
+ ┃ ┃ ┗ 📜Movie.module.scss
  ┃ ┣ 📜index.jsx
- ┃ ┗ 📜routes.module.scss
- ┣ 📂services
+ ┃ ┗ 📜Routes.module.scss
+ ┣ 📂services	                    //API
  ┃ ┗ 📜movie.ts
- ┣ 📂states
+ ┣ 📂states	                      //Atom
  ┃ ┗ 📜movieAtom.ts
  ┣ 📂styles
- ┣ 📂types
+ ┣ 📂types	                      //Type
  ┃ ┗ 📜movie.d.ts
- ┣ 📂utils
 ```
