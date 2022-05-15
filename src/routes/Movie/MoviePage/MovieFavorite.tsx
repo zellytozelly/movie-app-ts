@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react'
-import { ISearch } from 'types/movie'
+import { useEffect } from 'react'
 import cx from 'classnames'
 
 import styles from './MoviePage.module.scss'

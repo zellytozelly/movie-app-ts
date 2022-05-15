@@ -9,7 +9,7 @@ import styles from './MoviePage.module.scss'
 import { HeartIcon } from 'assets/svgs'
 import noPosterImg from 'assets/images/noPoster.png'
 
-const store = require('store')
+import store from 'store'
 
 interface Props {
   data: ISearch[]
@@ -20,7 +20,7 @@ interface Props {
 }
 
 const MovieList = ({ data, pageEndRef, handleModalToggle, handleFavoriteToggle, isOpenModal }: Props) => {
-  const [oneFavorite, setOneFavorite] = useRecoil(oneFavoriteState)
+  const [oneFavorite] = useRecoil(oneFavoriteState)
 
   useEffect(() => {
     favFunction()
