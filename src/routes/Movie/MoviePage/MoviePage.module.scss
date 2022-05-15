@@ -57,4 +57,12 @@
   .bottomRef {
     height: 100px;
   }
+
+  .isFavorite {
+    color: colors.$PINK;
+
+    svg {
+      fill: colors.$PINK;
+    }
+  }
 }

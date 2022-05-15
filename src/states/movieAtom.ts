@@ -10,4 +10,19 @@ export const modalClickState = atom<Boolean>({
   key: '#modalClickState',
   default: false,
 })
-  
+
+export const favoriteDataState = atom<ISearch[]>({
+  key: '#favoriteDataState',
+  default: [],
+})
+
+export const oneFavoriteState = atom<ISearch>({
+  key: '#oneFavoriteState',
+  default: {
+    Title: '',
+    Year: '',
+    imdbID: '',
+    Type: '',
+    Poster: '',
+  },
+})

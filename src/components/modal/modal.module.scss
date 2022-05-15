@@ -21,8 +21,9 @@
   align-items: center;
   width: 350px;
   height: 150px;
-  padding: 50px 10px 0;
+  padding: 10px;
   margin-left: 35px;
+  text-align: center;
   background-color: colors.$GRAYA;
   border: none;
   border-radius: 3px;
@@ -31,9 +32,14 @@
   button {
     padding: 10px;
     margin: 0 30px;
-    color: colors.$BLACK;
     background-color: colors.$GRAYD;
     border-radius: 10px;
+  }
+
+  h2 {
+    padding: 25px;
+    font-size: 1.2em;
+    font-weight: bold;
   }
 }
 

@@ -1,23 +1,46 @@
 import { useRecoil } from 'hooks/state'
-import { MutableRefObject } from 'react'
-import { modalClickState, searchDataState } from 'states/movieAtom'
+import { MutableRefObject, useEffect, useState } from 'react'
+import { favoriteDataState, modalClickState, oneFavoriteState, searchDataState } from 'states/movieAtom'
+import cx from 'classnames'
 
 import Modal from 'components/modal/Modal'
 import { ISearch } from 'types/movie.d'
 import styles from './moviePage.module.scss'
 import { HeartIcon } from 'assets/svgs'
 import noPosterImg from 'assets/images/noPoster.png'
+import _ from 'lodash'
+
+const store = require('store')
 
 interface Props {
   data: ISearch[]
   pageEndRef?: MutableRefObject<null>
-  onClickToggleModal: () => void
+  handleModalToggle: Function
+  handleFavoriteToggle: Function
   isOpenModal: Boolean
 }
 
-const MovieList = ({ data, pageEndRef, onClickToggleModal, isOpenModal }: Props) => {
-  if (!data) return null
+const MovieList = ({ data, pageEndRef, handleModalToggle, handleFavoriteToggle, isOpenModal }: Props) => {
+  const [isFavoriteItem, setIsFavoriteItem] = useState<ISearch>()
+  const [favoriteData, setFavoriteData] = useRecoil(favoriteDataState)
+  const [oneFavorite, setOneFavorite] = useRecoil(oneFavoriteState)
+  const [isFavorite, setIsFavorite] = useState<Boolean>(false)
+  const [itemImdbID, setItemImdbID] = useState<String>('')
 
+  // useEffect(() => {
+  //   favFunction()
+  // }, [])
+
+  // const favFunction = () => {
+  //   data.map((item) => {
+  //     store.each((key: ISearch, value: String) => {
+  //       _.find(store, item.imdbID === store.imdbID) ?? setIsFavorite((prev) => !prev)
+  //     })
+  //   })
+  // }
+  // console.log(favoriteData)
+
+  if (!data) return null
   return (
     <section className={styles.movieBodyWrap}>
       <ul>
@@ -25,9 +48,8 @@ const MovieList = ({ data, pageEndRef, onClickToggleModal, isOpenModal }: Props)
           <button
             type='button'
             key={item.imdbID}
-            value={item.imdbID}
             className={styles.dialogButton}
-            onClick={onClickToggleModal}
+            onClick={() => handleModalToggle(item)}
           >
             <li key={item.imdbID} className={styles.movieItemWrap}>
               <div className={styles.moviePosterWrap}>
@@ -45,7 +67,7 @@ const MovieList = ({ data, pageEndRef, onClickToggleModal, isOpenModal }: Props)
                 <dt>Type</dt>
                 <dd>{item.Type}</dd>
               </div>
-              <div className={styles.movieFavoriteWrap}>
+              <div className={cx(styles.movieFavoriteWrap, { [styles.isFavorite]: isFavorite })}>
                 <HeartIcon /> like
               </div>
             </li>
@@ -56,10 +78,13 @@ const MovieList = ({ data, pageEndRef, onClickToggleModal, isOpenModal }: Props)
       </ul>
 
       {isOpenModal && (
-        <Modal onClickToggleModal={onClickToggleModal}>
+        <Modal>
           <div>
-            <button type='button'>즐겨찾기</button>
-            <button type='button' onClick={onClickToggleModal}>
+            <h2 className={styles.modalTitle}>{oneFavorite.Title}</h2>
+            <button type='button' onClick={() => handleFavoriteToggle()}>
+              즐겨찾기
+            </button>
+            <button type='button' onClick={() => handleModalToggle()}>
               취소
             </button>
           </div>

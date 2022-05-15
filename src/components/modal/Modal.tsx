@@ -1,16 +1,11 @@
 import { PropsWithChildren, MouseEvent } from 'react'
 import styles from './modal.module.scss'
 
-interface ModalDefaultType {
-  onClickToggleModal: () => void
-}
+interface ModalDefaultType {}
 
-const Modal = ({ onClickToggleModal, children }: PropsWithChildren<ModalDefaultType>) => {
+const Modal = ({ children }: PropsWithChildren<ModalDefaultType>) => {
   const handleModalBtnClick = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
-    if (onClickToggleModal) {
-      onClickToggleModal()
-    }
   }
 
   return (
