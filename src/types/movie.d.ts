@@ -2,7 +2,7 @@ export interface ISearch {
   Title: string
   Year: string
   imdbID: string
-  Type: String
+  Type: string
   Poster: string
 }
 

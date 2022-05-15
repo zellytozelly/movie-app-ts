@@ -15,4 +15,3 @@ export const getMovieApi = (params: Params) =>
       apikey: process.env.REACT_APP_MOVIE_ID,
     },
   })
-
