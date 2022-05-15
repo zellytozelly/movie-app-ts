@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ISearch } from 'types/movie'
 import cx from 'classnames'
 
@@ -7,9 +7,7 @@ import { HeartIcon } from 'assets/svgs'
 import noPosterImg from 'assets/images/noPoster.png'
 import { useRecoil } from 'hooks/state'
 import { favoriteDataState, oneFavoriteState } from 'states/movieAtom'
-import Modal from 'components/modal/Modal'
-
-const store = require('store')
+import Modal from 'components/common/modal/Modal'
 
 interface ParamProps {
   handleModalToggle: Function
@@ -19,21 +17,12 @@ interface ParamProps {
 }
 
 const MovieFavorite = ({ handleModalToggle, handleFavoriteRemove, isOpenModal, favDelFunction }: ParamProps) => {
-  const [favData, setFavValue] = useState<ISearch[]>([])
-  const [favoriteData, setFavoriteData] = useRecoil(favoriteDataState)
-  const [oneFavorite, setOneFavorite] = useRecoil(oneFavoriteState)
+  const [favoriteData] = useRecoil(favoriteDataState)
+  const [oneFavorite] = useRecoil(oneFavoriteState)
 
   useEffect(() => {
     favDelFunction()
   }, [])
-
-  // const favData = store.each((key: ISearch, value: String) => {
-  //   if (!favoriteData.includes(key)) {
-  //     favoriteData.push(key)
-  //   }
-  // })
-  // const temp = store.get(key)
-  // console.log(temp)
 
   return (
     <section className={styles.movieBodyWrap}>

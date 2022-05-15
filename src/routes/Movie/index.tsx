@@ -1,4 +1,4 @@
-import { FormEvent, ChangeEvent, useState, useEffect, useRef, useCallback } from 'react'
+import { FormEvent, ChangeEvent, useState, useEffect, useRef } from 'react'
 import { Link, NavLink, useParams } from 'react-router-dom'
 import cx from 'classnames'
 
@@ -12,13 +12,13 @@ import { SearchIcon } from 'assets/svgs'
 import styles from './Movie.module.scss'
 import { ISearch } from 'types/movie'
 
-const store = require('store')
+import store from 'store'
 
 const Movie = () => {
   const { pageSection } = useParams<{ pageSection: string }>()
   const [searchValue, setSearchValue] = useState<string>('')
   const [searchData, setSearchData, resetSearchData] = useRecoil(searchDataState)
-  const [favoriteData, setFavoriteData] = useRecoil(favoriteDataState)
+  const [, setFavoriteData] = useRecoil(favoriteDataState)
   const [oneFavorite, setOneFavorite] = useRecoil(oneFavoriteState)
   const [pageNum, setPageNum] = useState<number>(0)
   const pageEndRef = useRef(null)
@@ -46,11 +46,7 @@ const Movie = () => {
     })
       .then((res) => {
         const apiData = res.data
-        // setSearchData(prev=>[...prev].concat(apiData.Search))
-        // setTimeout(() => {
-        console.log('s=', pageNum)
         setSearchData((prev) => [...prev, ...apiData.Search])
-        // }, 120)
       })
       .catch((error) => {
         console.log(error.message)
@@ -91,7 +87,7 @@ const Movie = () => {
 
   const favDelFunction = () => {
     const favLoop: ISearch[] = []
-    store.each((key: ISearch, value: String) => {
+    store.each((key: ISearch) => {
       favLoop.push(key)
     })
     setFavoriteData(favLoop)

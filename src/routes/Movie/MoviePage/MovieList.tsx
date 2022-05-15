@@ -1,14 +1,13 @@
 import { useRecoil } from 'hooks/state'
-import { MutableRefObject, useEffect, useState } from 'react'
-import { favoriteDataState, modalClickState, oneFavoriteState, searchDataState } from 'states/movieAtom'
+import { MutableRefObject, useEffect } from 'react'
+import { oneFavoriteState } from 'states/movieAtom'
 import cx from 'classnames'
 
-import Modal from 'components/modal/Modal'
+import Modal from 'components/common/modal/Modal'
 import { ISearch } from 'types/movie.d'
 import styles from './MoviePage.module.scss'
 import { HeartIcon } from 'assets/svgs'
 import noPosterImg from 'assets/images/noPoster.png'
-import _ from 'lodash'
 
 const store = require('store')
 
@@ -21,11 +20,7 @@ interface Props {
 }
 
 const MovieList = ({ data, pageEndRef, handleModalToggle, handleFavoriteToggle, isOpenModal }: Props) => {
-  const [isFavoriteItem, setIsFavoriteItem] = useState<ISearch>()
-  const [favoriteData, setFavoriteData] = useRecoil(favoriteDataState)
   const [oneFavorite, setOneFavorite] = useRecoil(oneFavoriteState)
-  const [isFavorite, setIsFavorite] = useState<Boolean>(false)
-  const [itemImdbID, setItemImdbID] = useState<String>('')
 
   useEffect(() => {
     favFunction()
@@ -37,11 +32,6 @@ const MovieList = ({ data, pageEndRef, handleModalToggle, handleFavoriteToggle, 
       favLoop.push(value)
     })
     return favLoop
-    // data.map((item) => {
-    //   store.each((key: ISearch, value: String) => {
-    //     _.find(store, item.imdbID === store.imdbID) ?? setIsFavorite((prev) => !prev)
-    //   })
-    // })
   }
 
   if (!data) return null
@@ -79,7 +69,6 @@ const MovieList = ({ data, pageEndRef, handleModalToggle, handleFavoriteToggle, 
             </li>
           </button>
         ))}
-
         <div className={styles.bottomRef} ref={pageEndRef} />
       </ul>
 
