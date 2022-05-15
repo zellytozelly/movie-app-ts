@@ -27,18 +27,22 @@ const MovieList = ({ data, pageEndRef, handleModalToggle, handleFavoriteToggle, 
   const [isFavorite, setIsFavorite] = useState<Boolean>(false)
   const [itemImdbID, setItemImdbID] = useState<String>('')
 
-  // useEffect(() => {
-  //   favFunction()
-  // }, [])
+  useEffect(() => {
+    favFunction()
+  }, [])
 
-  // const favFunction = () => {
-  //   data.map((item) => {
-  //     store.each((key: ISearch, value: String) => {
-  //       _.find(store, item.imdbID === store.imdbID) ?? setIsFavorite((prev) => !prev)
-  //     })
-  //   })
-  // }
-  // console.log(favoriteData)
+  const favFunction = () => {
+    const favLoop: string[] = []
+    store.each((key: ISearch, value: string) => {
+      favLoop.push(value)
+    })
+    return favLoop
+    // data.map((item) => {
+    //   store.each((key: ISearch, value: String) => {
+    //     _.find(store, item.imdbID === store.imdbID) ?? setIsFavorite((prev) => !prev)
+    //   })
+    // })
+  }
 
   if (!data) return null
   return (
@@ -67,7 +71,9 @@ const MovieList = ({ data, pageEndRef, handleModalToggle, handleFavoriteToggle, 
                 <dt>Type</dt>
                 <dd>{item.Type}</dd>
               </div>
-              <div className={cx(styles.movieFavoriteWrap, { [styles.isFavorite]: isFavorite })}>
+              <div
+                className={cx(styles.movieFavoriteWrap, { [styles.isFavorite]: favFunction().includes(item.imdbID) })}
+              >
                 <HeartIcon /> like
               </div>
             </li>
