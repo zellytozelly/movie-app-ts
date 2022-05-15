@@ -9,7 +9,7 @@ import MovieList from './MoviePage/MovieList'
 import MovieFavorite from './MoviePage/MovieFavorite'
 
 import { SearchIcon } from 'assets/svgs'
-import styles from './movie.module.scss'
+import styles from './Movie.module.scss'
 import { ISearch } from 'types/movie'
 
 const store = require('store')

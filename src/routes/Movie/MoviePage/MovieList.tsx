@@ -5,7 +5,7 @@ import cx from 'classnames'
 
 import Modal from 'components/modal/Modal'
 import { ISearch } from 'types/movie.d'
-import styles from './moviePage.module.scss'
+import styles from './MoviePage.module.scss'
 import { HeartIcon } from 'assets/svgs'
 import noPosterImg from 'assets/images/noPoster.png'
 import _ from 'lodash'

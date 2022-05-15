@@ -2,7 +2,7 @@ import { ReactNode, useEffect, useState } from 'react'
 import { ISearch } from 'types/movie'
 import cx from 'classnames'
 
-import styles from './moviePage.module.scss'
+import styles from './MoviePage.module.scss'
 import { HeartIcon } from 'assets/svgs'
 import noPosterImg from 'assets/images/noPoster.png'
 import { useRecoil } from 'hooks/state'

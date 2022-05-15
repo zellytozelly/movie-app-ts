@@ -1,4 +1,4 @@
-import styles from './routes.module.scss'
+import styles from './Routes.module.scss'
 import Movie from './Movie'
 import { Routes, Route } from 'react-router-dom'
 
