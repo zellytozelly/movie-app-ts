@@ -83,6 +83,20 @@ const Movie = () => {
     setIsOpenModal(!isOpenModal)
   }
 
+  const handleFavoriteRemove = (imdbID: string) => {
+    store.remove(`${imdbID}`)
+    favDelFunction()
+    setIsOpenModal(!isOpenModal)
+  }
+
+  const favDelFunction = () => {
+    const favLoop: ISearch[] = []
+    store.each((key: ISearch, value: String) => {
+      favLoop.push(key)
+    })
+    setFavoriteData(favLoop)
+  }
+
   return (
     <section className={styles.movieWrap}>
       <header className={styles.movieHeader}>
@@ -122,8 +136,9 @@ const Movie = () => {
         {pageSection === 'favorite' && (
           <MovieFavorite
             handleModalToggle={handleModalToggle}
-            handleFavoriteToggle={handleFavoriteToggle}
+            handleFavoriteRemove={handleFavoriteRemove}
             isOpenModal={isOpenModal}
+            favDelFunction={favDelFunction}
           />
         )}
       </main>

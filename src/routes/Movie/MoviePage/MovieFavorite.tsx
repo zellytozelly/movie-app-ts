@@ -13,26 +13,19 @@ const store = require('store')
 
 interface ParamProps {
   handleModalToggle: Function
-  handleFavoriteToggle: Function
+  handleFavoriteRemove: Function
   isOpenModal: Boolean
+  favDelFunction: Function
 }
 
-const MovieFavorite = ({ handleModalToggle, handleFavoriteToggle, isOpenModal }: ParamProps) => {
+const MovieFavorite = ({ handleModalToggle, handleFavoriteRemove, isOpenModal, favDelFunction }: ParamProps) => {
   const [favData, setFavValue] = useState<ISearch[]>([])
   const [favoriteData, setFavoriteData] = useRecoil(favoriteDataState)
   const [oneFavorite, setOneFavorite] = useRecoil(oneFavoriteState)
-  const favLoop: ISearch[] = []
 
   useEffect(() => {
-    favFunction()
+    favDelFunction()
   }, [])
-
-  const favFunction = () => {
-    store.each((key: ISearch, value: String) => {
-      favLoop.push(key)
-    })
-    setFavoriteData(favLoop)
-  }
 
   // const favData = store.each((key: ISearch, value: String) => {
   //   if (!favoriteData.includes(key)) {
@@ -80,8 +73,8 @@ const MovieFavorite = ({ handleModalToggle, handleFavoriteToggle, isOpenModal }:
         <Modal>
           <div>
             <h2>{oneFavorite.Title}</h2>
-            <button type='button' onClick={() => handleFavoriteToggle()}>
-              즐겨찾기
+            <button type='button' onClick={() => handleFavoriteRemove(oneFavorite.imdbID)}>
+              즐겨찾기 해제
             </button>
             <button type='button' onClick={() => handleModalToggle()}>
               취소
